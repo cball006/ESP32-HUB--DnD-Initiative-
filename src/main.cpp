@@ -1,26 +1,20 @@
 #include <Arduino.h>
-#include <Adafruit_NeoPixel.h>
+#include <Adafruit_Neopixel.h>
 #include "bluetooth.h"
 
-#define LED_PIN 48
-Adafruit_NeoPixel LED_RGB(1, LED_PIN, NEO_GRBW + NEO_KHZ800);
+
+Adafruit_NeoPixel LED_RGB(1, 48, NEO_GRBW + NEO_KHZ800);
 
 void setup() {
     Serial.begin(115200);
-    delay(2000);
-    Serial.println("ESP32 HUB Starting...");
-
+    delay(1000); // wait for serial monitor
     LED_RGB.begin();
     LED_RGB.setBrightness(70);
-    LED_RGB.setPixelColor(0, LED_RGB.Color(0,0,0));
-    LED_RGB.show();
 
     initBluetooth();
-
+    Serial.println("ESP32 HUB Starting...");
 }
 
 void loop() {
-    handleBluetooth();
+    handleBluetooth(); // needed for future updates, empty for now
 }
-
-    
