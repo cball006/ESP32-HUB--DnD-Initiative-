@@ -2,7 +2,6 @@
 #include <Adafruit_Neopixel.h>
 #include "bluetooth.h"
 
-
 Adafruit_NeoPixel LED_RGB(1, 48, NEO_GRBW + NEO_KHZ800);
 
 void setup() {
@@ -13,6 +12,15 @@ void setup() {
 
     initBluetooth();
     Serial.println("ESP32 HUB Starting...");
+
+    // 2️⃣ Give BLE controller time to stabilize
+    delay(100);
+
+    // 3️⃣ Start ESP-NOW second
+    initEspNow();
+
+    Serial.println("ESP32 HUB Ready");
+
 }
 
 void loop() {
