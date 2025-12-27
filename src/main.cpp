@@ -8,7 +8,7 @@ void setup() {
     Serial.begin(115200);
     delay(1000); // wait for serial monitor
     LED_RGB.begin();
-    LED_RGB.setBrightness(70);
+        
 
     initBluetooth();
     Serial.println("ESP32 HUB Starting...");
@@ -20,7 +20,9 @@ void setup() {
     initEspNow();
 
     Serial.println("ESP32 HUB Ready");
-
+    LED_RGB.setPixelColor(0, LED_RGB.Color(0,255,255)); // Cyan for ready
+    LED_RGB.show();
+    
 }
 
 void loop() {
