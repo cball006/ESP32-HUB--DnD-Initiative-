@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include "encoder.h"
 
-#define ENC_A   4 // GPIO pins
-#define ENC_B   5 // GPIO pins
+#define ENC_A   5 // GPIO pins
+#define ENC_B   4 // GPIO pins
 #define ENC_SW  6 // GPIO pins
 
 volatile int encoderDelta = 0;

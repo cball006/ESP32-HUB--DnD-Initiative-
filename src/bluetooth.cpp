@@ -13,6 +13,12 @@ NimBLECharacteristic* pTxCharacteristic;
 NimBLECharacteristic* pRxCharacteristic;
 bool deviceConnected = false;
 
+// ================= TURN COMMAND BLE =================
+#define TURN_COMMAND_UUID "6E400004-B5A3-F393-E0A9-E50E24DCCA9E"
+
+NimBLECharacteristic* pTurnCommandCharacteristic;
+
+
 // ================= ESPNOW CONFIG =================
 #define ESPNOW_PACKET_SIZE 6   // [0]=Hub, [1..5]=Players
 
@@ -154,6 +160,11 @@ void initBluetooth() {
     );
     pRxCharacteristic->setCallbacks(new RXCallbacks());
 
+    pTurnCommandCharacteristic = pService->createCharacteristic(
+    TURN_COMMAND_UUID,
+    NIMBLE_PROPERTY::NOTIFY
+    );
+
     pService->start();
 
     NimBLEAdvertising* pAdvertising = NimBLEDevice::getAdvertising();
@@ -171,3 +182,20 @@ void initBluetooth() {
 void handleBluetooth() {
     // Event-driven; nothing needed
 }
+
+
+void sendTurnCommand(int8_t direction) {
+    if (!deviceConnected) return;
+
+    // Only allow -1 or +1
+    if (direction != -1 && direction != 1) return;
+
+    pTurnCommandCharacteristic->setValue(
+        (uint8_t*)&direction,
+        1
+    );
+    pTurnCommandCharacteristic->notify();
+
+    Serial.printf("🔄 Turn command sent: %d\n", direction);
+}
+

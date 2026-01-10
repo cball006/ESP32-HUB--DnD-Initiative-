@@ -36,8 +36,10 @@ void loop() {
     encoderUpdate();
 
   if (encoderDelta != 0) {
+    int8_t dir = encoderDelta > 0 ? 1 : -1;
     menuIndex += encoderDelta;
     encoderDelta = 0;
+    sendTurnCommand(dir);
 
     Serial.print("Menu index: ");
     Serial.println(menuIndex);
